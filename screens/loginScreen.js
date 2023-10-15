@@ -1,20 +1,13 @@
 import {Text, ScrollView, Image} from 'react-native';
 import {useState, useCallback, useEffect} from 'react';
-// import {useSelector, useDispatch} from 'react-redux';
-
-// import { FontAwesome } from '@expo/vector-icons'; 
-
 import {constantValues} from '../staticDataFiles/constantValues';
 
 import TextInputComponent from '../components/textInputComponent';
-// import {CommonHeaderComponent} from '../components/commonHeaderComponent';
+import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import ButtonComponent from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
 
-// import {changeLoginUserData} from '../learnRedux/actions';
-
 import {generateOTP} from '../javaScriptFunction/generateOTP';
-import {sendSMS} from '../javaScriptFunction/sendSMS';
 // import {getAnObjectFromAsyncStorage, saveAnObjectInAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
 
 import {translationValues} from '../staticDataFiles/translationValues';
@@ -57,10 +50,7 @@ export const LoginScreen = (props)=>{
 		if(constantValues.registeredMobileNumber === mobileNumber || showOTPUI){
 			if(showOTPUI){
 				let generatedOTP = generateOTP();
-				console.log('generatedOTP: ', generatedOTP);
 				const mobileNumbersArray = [constantValues.registeredMobileNumber];
-				// const otpSMSText = `Generated OTP --> ${generatedOTP} On ASPatel App`;
-				// const sendSMSResponse = await sendSMS(mobileNumbersArray, otpSMSText);
 				navigation.navigate('OTPVerifyScreen', {
 					mobileNumber:countryCode+' '+mobileNumber,
 					otp:generatedOTP,
@@ -86,7 +76,7 @@ export const LoginScreen = (props)=>{
 
 	return(
 		<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
-			{/*<CommonHeaderComponent/>*/}
+			<CommonHeaderComponent/>
 			<Text style={styles.screenHeading}>{en.login}</Text>
 			<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
 			<TextInputComponent
