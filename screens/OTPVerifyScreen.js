@@ -1,14 +1,14 @@
 import {Text, ScrollView, Image} from 'react-native';
-import {useState, useRef, useEffect} from 'react';
+import {useState, useCallback, useMemo, useRef, useEffect} from 'react';
 
 import {constantValues} from '../staticDataFiles/constantValues';
 import BoxOTPInput from '../components/boxOTPInput';
-// import {CommonHeaderComponent} from '../components/commonHeaderComponent';
+import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import ButtonComponent from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
+import {changeLoginUserData} from '../learnRedux/actions';
 import {saveAnObjectInAsyncStorage} from '../javaScriptFunction/asyncStorageFunctionality';
 import {sendSMS} from '../javaScriptFunction/sendSMS';
-
 import {translationValues} from '../staticDataFiles/translationValues';
 const {en} = translationValues;
 
@@ -99,7 +99,7 @@ export const OTPVerifyScreen = (props)=>{
 
 	return(
 		<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
-			{/*<CommonHeaderComponent/>*/}
+			<CommonHeaderComponent/>
 			<Text style={styles.screenHeading}>{en.otpVerify}</Text>
 			<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
 			<Text style={styles.otpTitleStyle}>{en.otpSentTo}</Text>
