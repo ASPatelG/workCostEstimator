@@ -26,10 +26,10 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 
 import { NavigationContainer } from '@react-navigation/native';
-// import {createStackNavigator} from '@react-navigation/stack';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import {LoginScreen} from './screens/loginScreen';
+import {OTPVerifyScreen} from './screens/OTPVerifyScreen';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -47,7 +47,7 @@ function AppMainStack (){
           {/*<ApploadingStack.Screen name="ChooseWork" component={ChooseWork} options={{headerShown:false}}/>*/}
           {/*<ApploadingStack.Screen name="ProgramingPracitseStack" component={ProgramingPracitseStack} options={{headerShown:false}}/>*/}
           <ApploadingStack.Screen name="LoginScreen" component={LoginScreen} options={{headerShown:false}}/>
-          {/*<ApploadingStack.Screen name="OTPVerifyScreen" component={OTPVerifyScreen} options={{headerShown:false}}/>*/}
+          <ApploadingStack.Screen name="OTPVerifyScreen" component={OTPVerifyScreen} options={{headerShown:false}}/>
           {/*<ApploadingStack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>*/}
           {/*<ApploadingStack.Screen name="AddUpdatePartyWorkDetails" component={AddUpdatePartyWorkDetails} options={{headerShown:false}}/>*/}
         </ApploadingStack.Navigator>

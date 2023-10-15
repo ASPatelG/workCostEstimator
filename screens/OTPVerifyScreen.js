@@ -1,16 +1,16 @@
 import {Text, ScrollView, Image} from 'react-native';
-import {useState, useCallback, useMemo, useRef} from 'react';
-import {useSelector} from 'react-redux';
-
-import { FontAwesome } from '@expo/vector-icons'; 
+import {useState, useRef, useEffect} from 'react';
 
 import {constantValues} from '../staticDataFiles/constantValues';
 import BoxOTPInput from '../components/boxOTPInput';
-import {CommonHeaderComponent} from '../components/commonHeaderComponent';
+// import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import ButtonComponent from '../components/buttonComponent';
 import {crossPlatformToast} from '../components/crossPlatformToast';
-import {changeLoginUserData} from '../learnRedux/actions';
-import {saveAnObjectInAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
+import {saveAnObjectInAsyncStorage} from '../javaScriptFunction/asyncStorageFunctionality';
+import {sendSMS} from '../javaScriptFunction/sendSMS';
+
+import {translationValues} from '../staticDataFiles/translationValues';
+const {en} = translationValues;
 
 import {styles} from './screens.styles/OTPVerifyStyles';
 
@@ -19,8 +19,16 @@ export const OTPVerifyScreen = (props)=>{
 	const {route:{params}} = props;
 
 	const [otp, setOTP] = useState(params.otp);
-	const transRef  = useSelector((state)=>state.transRef);
 	const [otpValueArray, setOtpValueArray] = useState(['', '', '', '']); 	// To fill generated otp automatically
+
+	useEffect(()=>{
+		const openSMSApp = async ()=>{
+			console.log('generatedOTP: ', otp);
+			const otpSMSText = `Generated OTP --> ${otp} On ASPatel App`;
+			const sendSMSResponse = await sendSMS(params.mobileNumber, otpSMSText);
+		}
+		openSMSApp();
+	}, []);
 
 	function onchangeOTP(enteredText){
 		const regularExpression = /^[0-9]+$/;
@@ -67,7 +75,7 @@ export const OTPVerifyScreen = (props)=>{
 		const {navigation} = props;
 		const enteredOTP = otpValueArray.join('');
 		if(otp === enteredOTP){
-			crossPlatformToast(transRef.t('loginSuccess'));
+			crossPlatformToast(en.loginSuccess);
 			saveAnObjectInAsyncStorage(
 				'businessUserData',
 				{
@@ -80,7 +88,7 @@ export const OTPVerifyScreen = (props)=>{
 			navigation.navigate('CostEstimationCalculator');
 		}
 		else{
-			crossPlatformToast(transRef.t('wrongOTP'));
+			crossPlatformToast(en.wrongOTP);
 		}
 	};
 
@@ -91,10 +99,10 @@ export const OTPVerifyScreen = (props)=>{
 
 	return(
 		<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
-			<CommonHeaderComponent/>
-			<Text style={styles.screenHeading}>{transRef.t('otpVerify')}</Text>
+			{/*<CommonHeaderComponent/>*/}
+			<Text style={styles.screenHeading}>{en.otpVerify}</Text>
 			<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
-			<Text style={styles.otpTitleStyle}>{transRef.t('otpSentTo')}</Text>
+			<Text style={styles.otpTitleStyle}>{en.otpSentTo}</Text>
 			<Text style={styles.mobileNumberStyle}>{params.mobileNumber}</Text>
 			<BoxOTPInput
 				onchangeBoxValue={onchangeBoxValue}
@@ -105,12 +113,12 @@ export const OTPVerifyScreen = (props)=>{
 				onFocusTextInput={onFocusTextInput}
 			/>
 			<ButtonComponent
-				title={transRef.t('verifyOTP')}
+				title={en.verifyOTP}
 				onPressIn={onPressVerify}
 				disabled={disableVerifyButton()}
 				mainContainer={styles.buttonContainer}
 			/>
-			<Text style={styles.signupHintStyle}>{transRef.t('signupHint')}</Text>
+			<Text style={styles.signupHintStyle}>{en.signupHint}</Text>
 		</ScrollView>
 	);
 }

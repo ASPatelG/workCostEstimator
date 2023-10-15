@@ -9,12 +9,12 @@ import {constantValues} from '../staticDataFiles/constantValues';
 import TextInputComponent from '../components/textInputComponent';
 // import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import ButtonComponent from '../components/buttonComponent';
-// import {crossPlatformToast} from '../components/crossPlatformToast';
+import {crossPlatformToast} from '../components/crossPlatformToast';
 
 // import {changeLoginUserData} from '../learnRedux/actions';
 
 import {generateOTP} from '../javaScriptFunction/generateOTP';
-// import {sendSMS} from '../javaScriptFunction/sendSMS';
+import {sendSMS} from '../javaScriptFunction/sendSMS';
 // import {getAnObjectFromAsyncStorage, saveAnObjectInAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
 
 import {translationValues} from '../staticDataFiles/translationValues';
@@ -55,22 +55,16 @@ export const LoginScreen = (props)=>{
 	const onPressSubmit = async(nativeEvent)=>{
 		const {navigation} = props;
 		if(constantValues.registeredMobileNumber === mobileNumber || showOTPUI){
-			// dispatchrefrence(changeLoginUserData({
-			// 	loginUserData:{
-			// 		mobileNumber:constantValues.registeredMobileNumber,
-			// 		userName:constantValues.registeredUserName
-			// 	}
-			// }));
 			if(showOTPUI){
 				let generatedOTP = generateOTP();
 				console.log('generatedOTP: ', generatedOTP);
 				const mobileNumbersArray = [constantValues.registeredMobileNumber];
-				const otpSMSText = `Generated OTP --> ${generatedOTP} On ASPatel App`;
-				const sendSMSResponse = await sendSMS(mobileNumbersArray, otpSMSText);
-				// navigation.navigate('OTPVerifyScreen', {
-				// 	mobileNumber:countryCode+' '+mobileNumber,
-				// 	otp:generatedOTP,
-				// });
+				// const otpSMSText = `Generated OTP --> ${generatedOTP} On ASPatel App`;
+				// const sendSMSResponse = await sendSMS(mobileNumbersArray, otpSMSText);
+				navigation.navigate('OTPVerifyScreen', {
+					mobileNumber:countryCode+' '+mobileNumber,
+					otp:generatedOTP,
+				});
 				setMobileNumber('');
 			}
 			else{
@@ -85,16 +79,16 @@ export const LoginScreen = (props)=>{
 				navigation.navigate('CostEstimationCalculator');
 			}
 		}
-		// else{
-		// 	crossPlatformToast(en.notRegistered);
-		// }
+		else{
+			crossPlatformToast(en.notRegistered);
+		}
 	}
 
 	return(
 		<ScrollView style={styles.mainContainer} keyboardShouldPersistTaps={'always'}>
 			{/*<CommonHeaderComponent/>*/}
 			<Text style={styles.screenHeading}>{en.login}</Text>
-			{/*<Image source={require('../appImage/homeIcon.jpg'}  style={styles.loginIcon} />*/}
+			<Image source={require('../appImage/homeIcon.jpg')}  style={styles.loginIcon} />
 			<TextInputComponent
 				showFieldLabel={true}
 				fieldLabelText={en.enterMobilNumber}
