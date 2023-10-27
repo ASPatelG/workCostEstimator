@@ -1,7 +1,7 @@
 import {TouchableOpacity, StyleSheet} from 'react-native';
 import {memo} from 'react';
 
-import { AntDesign } from '@expo/vector-icons';
+// import { AntDesign } from '@expo/vector-icons';
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
@@ -25,12 +25,12 @@ const LogoutUI = (props)=>{
 			style={styles.logoutIconContainer}
 			onPress={onPressLogout}
 		>
-			<AntDesign
+{/*			<AntDesign
 				name="logout"
 				size={33}
 				color="#FCA203"
 				style={styles.iconStyle}
-			/>
+			/>*/}
 		</TouchableOpacity>
 	);
 }
