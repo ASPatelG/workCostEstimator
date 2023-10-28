@@ -5,7 +5,7 @@ import {memo} from 'react';
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-import {removeAnObjectFromAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
+// import {removeAnObjectFromAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
 
 const LogoutUI = (props)=>{
 	/* Used to show ui till the app is loading */
@@ -16,7 +16,7 @@ const LogoutUI = (props)=>{
 		*/
 
 		const {navigation} = props;
-		removeAnObjectFromAsyncStorage("businessUserData");
+		// removeAnObjectFromAsyncStorage("businessUserData");
 		navigation.popToTop();
 	}
 
