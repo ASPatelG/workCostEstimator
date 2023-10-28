@@ -1,6 +1,7 @@
 import {View, Text, SafeAreaView, ScrollView, BackHandler} from 'react-native';
 import {useState,  useEffect} from 'react';
-// import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import { addQuotation, updateQuotation } from '../reduxToolkit/slice/quotationsSlice';
 
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import TextInputComponent from '../components/textInputComponent';
@@ -15,7 +16,7 @@ import {styles} from './screens.styles/addUpdatePartyDetailsStyle';
 
 const AddUpdatePartyWorkDetails = (props)=>{
 	const {route:{params}} = props;
-	// const dispatchRefrence = useDispatch()		// To send the data in store
+	const dispatchRefrence = useDispatch()		// To send the data in store
 	const [partyDetails, setPartyDetails] = useState({
 		firstName:'',
 		lastName:'',
@@ -203,8 +204,22 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	const onPressSave = async ()=>{
 		const {navigation} = props;
 		// const insertDataOutput = await insertPartyDetail(partyDetails);
-		const bodyData = {first_name:partyDetails.firstName, last_name:partyDetails.lastName, mobile_number:partyDetails.mobileNumber, email:partyDetails.email, work_type:partyDetails.workType, length:partyDetails.length, width:partyDetails.width, height:partyDetails.height, rate:partyDetails.rate, total_area:partyDetails.totalArea, amount:partyDetails.amount, discount:partyDetails.discount};
-		// dispatchRefrence(addPartyDetails({partyData:bodyData}));	// Since useEffect Not Calling again
+		const bodyData = {
+			first_name:partyDetails.firstName,
+			last_name:partyDetails.lastName,
+			mobile_number:partyDetails.mobileNumber,
+			email:partyDetails.email,
+			work_type:partyDetails.workType,
+			length:partyDetails.length,
+			width:partyDetails.width,
+			height:partyDetails.height,
+			rate:partyDetails.rate,
+			total_area:partyDetails.totalArea,
+			amount:partyDetails.amount,
+			discount:partyDetails.discount
+		};
+		// dispatchRefrence(addQuotation({partyData:bodyData}));	// Since useEffect Not Calling again
+		dispatchRefrence(addQuotation(bodyData));
 		navigation.goBack();
 	}
 
@@ -212,7 +227,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 		const {navigation} = props;
 		// const updateDataResult = await updatePartyDetail(partyDetails);
 		const bodyData = {first_name:partyDetails.firstName, last_name:partyDetails.lastName, mobile_number:partyDetails.mobileNumber, email:partyDetails.email, work_type:partyDetails.workType, length:partyDetails.length, width:partyDetails.width, height:partyDetails.height, rate:partyDetails.rate, total_area:partyDetails.totalArea, amount:partyDetails.amount, discount:partyDetails.discount};
-		// dispatchRefrence(updatePartyDetails({partyData:bodyData, activeIndex:params.activeIndex}));		// Since useEffect Not Calling again
+		dispatchRefrence(updateQuotation({partyData:bodyData, activeIndex:params.activeIndex}));		// Since useEffect Not Calling again
 		navigation.goBack();
 	}
 

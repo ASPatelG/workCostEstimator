@@ -1,6 +1,6 @@
 import {useState, useEffect, useRef} from 'react';
 import {View, BackHandler, FlatList, Pressable, Text} from 'react-native';
-// import {useSelector, useDispatch} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 
 // import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
 
@@ -34,7 +34,7 @@ const { en } = translationValues;
 const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	/* Used to show ui till the app is loading */
 	const [state, setState] = useState({
-		allPartiesWorkArray:[],
+		// allPartiesWorkArray:[],
 		appliedFilter:{
 			isApplied:false,
 			mobileNumber:'',
@@ -44,6 +44,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		workType:constantValues.workTypes[0].value,
 		isLoading:true,
 	});
+	const allPartiesWorkArray  = useSelector((state)=>state.quotations.quotations);
 	// const dispatchRefrence = useDispatch()		// To send the data in store
 	const RBSheetRef = useRef(null);
 
@@ -60,9 +61,8 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		};
 
 		const setPartyDataInStore = async() => {
-			// let tablePartyData = await getPartyData();
 			// setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{mobileNumber:'', isApplied:false, workType:''}, isLoading:false}));
-			setState((previous)=>({...previous, allPartiesWorkArray:[], appliedFilter:{mobileNumber:'', isApplied:false, workType:''}, isLoading:false}));
+			setState((previous)=>({...previous, appliedFilter:{mobileNumber:'', isApplied:false, workType:''}, isLoading:false}));
 		};
 
 		const backHandler = BackHandler.addEventListener(
@@ -90,8 +90,8 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	const onPressPDF = (nativeEvent)=>{
-		if(state.allPartiesWorkArray.length > 0){
-			generateWorkPaymentPDF(state.allPartiesWorkArray);
+		if(allPartiesWorkArray.length > 0){
+			generateWorkPaymentPDF(allPartiesWorkArray);
 		}
 		else{
 			showErrorAlert(en.noWorkError);
@@ -117,7 +117,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	const onOpenFilterUI = (nativeEvent)=>{
-		if(state.allPartiesWorkArray.length === 0 && !state.appliedFilter.isApplied){
+		if(allPartiesWorkArray.length === 0 && !state.appliedFilter.isApplied){
 			showErrorAlert(en.noWorkError);
 		}
 		else{
@@ -178,10 +178,10 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 						/>
 						: null
 					}
-					{state.allPartiesWorkArray.length
+					{allPartiesWorkArray.length
 						? <View style={styles.flatlistContainer}>
 						<FlatList 
-							data={state.allPartiesWorkArray} 
+							data={allPartiesWorkArray} 
 							renderItem={({item, index})=> <PartyShortDetails
 								key={index}
 								index={index}
@@ -194,7 +194,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 						/></View>
 						: null
 					}
-					{state?.appliedFilter?.isApplied && !state?.allPartiesWorkArray?.length
+					{state?.appliedFilter?.isApplied && !allPartiesWorkArray?.length
 						? <Text style={styles.noFilterPartyData}>{en.notFoundPartyData}</Text>
 						: null
 					}
