@@ -35,7 +35,7 @@ const quotationsSlice = createSlice({
 		state.quotations[activeIndex] = partyData;
 	},
 	deleteQuotation: (state, action: PayloadAction<number>) => {
-	  state.quotations = state.quotations.filter((q) => q.id !== action.payload);
+	  state.quotations = state.quotations.filter((q) => q.mobile_number !== action.payload);
 	},
   },
 });

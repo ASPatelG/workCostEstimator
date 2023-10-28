@@ -1,6 +1,6 @@
 import {View, Text, SafeAreaView, ScrollView, BackHandler} from 'react-native';
 import {useState,  useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { addQuotation, updateQuotation } from '../reduxToolkit/slice/quotationsSlice';
 
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
@@ -218,7 +218,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 			amount:partyDetails.amount,
 			discount:partyDetails.discount
 		};
-		// dispatchRefrence(addQuotation({partyData:bodyData}));	// Since useEffect Not Calling again
+		// dispatchRefrence(addQuotation({partyData:bodyData}));
 		dispatchRefrence(addQuotation(bodyData));
 		navigation.goBack();
 	}
@@ -227,7 +227,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 		const {navigation} = props;
 		// const updateDataResult = await updatePartyDetail(partyDetails);
 		const bodyData = {first_name:partyDetails.firstName, last_name:partyDetails.lastName, mobile_number:partyDetails.mobileNumber, email:partyDetails.email, work_type:partyDetails.workType, length:partyDetails.length, width:partyDetails.width, height:partyDetails.height, rate:partyDetails.rate, total_area:partyDetails.totalArea, amount:partyDetails.amount, discount:partyDetails.discount};
-		dispatchRefrence(updateQuotation({partyData:bodyData, activeIndex:params.activeIndex}));		// Since useEffect Not Calling again
+		dispatchRefrence(updateQuotation({partyData:bodyData, activeIndex:params.activeIndex}));
 		navigation.goBack();
 	}
 
