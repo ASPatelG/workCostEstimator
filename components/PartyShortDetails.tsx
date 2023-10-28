@@ -3,14 +3,20 @@ import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 // import { AntDesign } from '@expo/vector-icons';
 import {useDispatch} from 'react-redux';
-// import { markEmployeeAsStar} from '../redux/actions';
+import { deleteQuotation } from '../reduxToolkit/slice/quotationsSlice';
 
 const PartyShortDetails = (props)=>{
+	const dispatchRefrence = useDispatch()		// To send the data in store
+
 	const {partySomeDetails, index}  = props;
 
-	const onPress = (partySomeDetails, index)=>{
+	const onUpdate = (partySomeDetails, index)=>{
 		const {navigation} = props;
 		navigation.navigate('AddUpdatePartyWorkDetails', {partySomeDetails, activeIndex:index});
+	}
+
+	const onDelete = (partySomeDetails, index)=>{
+		dispatchRefrence(deleteQuotation(partySomeDetails.mobile_number));
 	}
 
 	return(
@@ -27,13 +33,29 @@ const PartyShortDetails = (props)=>{
 			<View style={styles.columnStyle}>
 				<Text style={styles.columnValueStyle}>{partySomeDetails.amount}</Text>
 			</View>
-			<Pressable
-				onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
-				style={styles.columnStyle}
-			>
-				<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>
-				{/*<AntDesign name="edit" size={22} color="#808080" />*/}
-			</Pressable>
+			<View>
+				<Pressable
+					// onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
+					style={styles.columnStyle}
+				>
+					<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>
+					{/*<AntDesign name="edit" size={22} color="#808080" />*/}
+				</Pressable>
+				<Pressable
+					onPressIn={(nativeEvent)=>onUpdate(partySomeDetails, index)}
+					style={styles.columnStyle}
+				>
+					<Text style={styles.updateTextStyle}>{'Update'}</Text>
+					{/*<AntDesign name="edit" size={22} color="#808080" />*/}
+				</Pressable>
+				<Pressable
+					onPressIn={(nativeEvent)=>onDelete(partySomeDetails, index)}
+					style={styles.columnStyle}
+				>
+					<Text style={styles.deleteTextStyle}>{'Delete'}</Text>
+					{/*<AntDesign name="edit" size={22} color="#808080" />*/}
+				</Pressable>
+			</View>
 		</View>
 	);
 }
@@ -83,6 +105,20 @@ const styles = StyleSheet.create({
 		fontSize:15,
 		fontWeight:'bold',
 		color:'#00CF35',
+		width:wp('13%'),
+		textAlign:'center',
+	},
+	updateTextStyle:{
+		fontSize:15,
+		fontWeight:'bold',
+		color:'#6666ff',
+		width:wp('13%'),
+		textAlign:'center',
+	},
+	deleteTextStyle:{
+		fontSize:15,
+		fontWeight:'bold',
+		color:'#ff0000',
 		width:wp('13%'),
 		textAlign:'center',
 	}
