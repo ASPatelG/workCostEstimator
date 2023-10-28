@@ -84,7 +84,7 @@ export const OTPVerifyScreen = (props)=>{
 				}
 			);
 			/* userData has set from constant because i will register user before creating build */
-			// navigation.navigate('CostEstimationCalculator');
+			navigation.navigate('CostEstimationCalculator');
 		}
 		else{
 			crossPlatformToast(en.wrongOTP);

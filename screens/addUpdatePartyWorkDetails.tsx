@@ -1,20 +1,21 @@
 import {View, Text, SafeAreaView, ScrollView, BackHandler} from 'react-native';
 import {useState,  useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+// import {useSelector, useDispatch} from 'react-redux';
 
 import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import TextInputComponent from '../components/textInputComponent';
 import ButtonComponent from '../components/buttonComponent';
-import {addPartyDetails, updatePartyDetails} from '../learnRedux/actions';
-import { insertPartyDetail } from '../sqliteDatabaseFunctionality/insertData';
-import { updatePartyDetail } from '../sqliteDatabaseFunctionality/updateData';
+// import {addPartyDetails, updatePartyDetails} from '../learnRedux/actions';
+// import { insertPartyDetail } from '../sqliteDatabaseFunctionality/insertData';
+// import { updatePartyDetail } from '../sqliteDatabaseFunctionality/updateData';
+import {translationValues} from '../staticDataFiles/translationValues';
+const { en } = translationValues;
 
 import {styles} from './screens.styles/addUpdatePartyDetailsStyle';
 
 const AddUpdatePartyWorkDetails = (props)=>{
 	const {route:{params}} = props;
-	const transRef  = useSelector((state)=>state.transRef);
-	const dispatchRefrence = useDispatch()		// To send the data in store
+	// const dispatchRefrence = useDispatch()		// To send the data in store
 	const [partyDetails, setPartyDetails] = useState({
 		firstName:'',
 		lastName:'',
@@ -201,7 +202,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 
 	const onPressSave = async ()=>{
 		const {navigation} = props;
-		const insertDataOutput = await insertPartyDetail(partyDetails);
+		// const insertDataOutput = await insertPartyDetail(partyDetails);
 		const bodyData = {first_name:partyDetails.firstName, last_name:partyDetails.lastName, mobile_number:partyDetails.mobileNumber, email:partyDetails.email, work_type:partyDetails.workType, length:partyDetails.length, width:partyDetails.width, height:partyDetails.height, rate:partyDetails.rate, total_area:partyDetails.totalArea, amount:partyDetails.amount, discount:partyDetails.discount};
 		// dispatchRefrence(addPartyDetails({partyData:bodyData}));	// Since useEffect Not Calling again
 		navigation.goBack();
@@ -209,7 +210,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 
 	const onPressUpdate = async ()=>{
 		const {navigation} = props;
-		const updateDataResult = await updatePartyDetail(partyDetails);
+		// const updateDataResult = await updatePartyDetail(partyDetails);
 		const bodyData = {first_name:partyDetails.firstName, last_name:partyDetails.lastName, mobile_number:partyDetails.mobileNumber, email:partyDetails.email, work_type:partyDetails.workType, length:partyDetails.length, width:partyDetails.width, height:partyDetails.height, rate:partyDetails.rate, total_area:partyDetails.totalArea, amount:partyDetails.amount, discount:partyDetails.discount};
 		// dispatchRefrence(updatePartyDetails({partyData:bodyData, activeIndex:params.activeIndex}));		// Since useEffect Not Calling again
 		navigation.goBack();
@@ -218,11 +219,11 @@ const AddUpdatePartyWorkDetails = (props)=>{
 	return(
 		<SafeAreaView style={styles.mainContainer}>
 			<CommonHeaderComponent/>
-			<Text style={styles.eployeeDetailsStyle}>{transRef.t('addPartyWork')}</Text>
+			<Text style={styles.eployeeDetailsStyle}>{en.addPartyWork}</Text>
 			<ScrollView>
 				<TextInputComponent
 					showFieldLabel={true}
-					fieldLabelText={transRef.t('enterFirstName')}
+					fieldLabelText={en.enterFirstName}
 					value={partyDetails.firstName}
 					onChangeText={onChangeFirstName}
 					maxLength={30}
@@ -231,7 +232,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				/>
 				<TextInputComponent
 					showFieldLabel={true}
-					fieldLabelText={transRef.t('enterLastName')}
+					fieldLabelText={en.enterLastName}
 					value={partyDetails.lastName}
 					onChangeText={onChangeLastName}
 					maxLength={30}
@@ -239,7 +240,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				/>
 				<TextInputComponent
 					showFieldLabel={true}
-					fieldLabelText={transRef.t('enterMobilNumber')}
+					fieldLabelText={en.enterMobilNumber}
 					value={partyDetails.mobileNumber?.toString()}
 					onChangeText={onChangeMobileNumber}
 					maxLength={10}
@@ -249,7 +250,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				/>
 				<TextInputComponent
 					showFieldLabel={true}
-					fieldLabelText={transRef.t('enterEmail')}
+					fieldLabelText={en.enterEmail}
 					value={partyDetails.email}
 					onChangeText={onChangeEmail}
 					keyboardType='email-address'
@@ -259,7 +260,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				<View style={styles.workAreaDetails}>
 					<TextInputComponent
 						showFieldLabel={true}
-						fieldLabelText={transRef.t('workType')}
+						fieldLabelText={en.workType}
 						value={partyDetails.workType}
 						onChangeText={onChangeWorkType}
 						isItRequired={true}
@@ -268,7 +269,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 					/>
 					<TextInputComponent
 						showFieldLabel={true}
-						fieldLabelText={transRef.t('workRate')}
+						fieldLabelText={en.workRate}
 						value={partyDetails.rate?.toString()}
 						onChangeText={onChangeRate}
 						keyboardType='number-pad'
@@ -278,11 +279,11 @@ const AddUpdatePartyWorkDetails = (props)=>{
 						maxLength={10}
                    />
 				</View>
-				<Text style={styles.workAreaHeading}>{transRef.t('workArea')}</Text>
+				<Text style={styles.workAreaHeading}>{en.workArea}</Text>
 				<View style={styles.workAreaDetails}>
 					<TextInputComponent
 						showFieldLabel={true}
-						fieldLabelText={transRef.t('length')}
+						fieldLabelText={en.length}
 						value={partyDetails.length?.toString()}
 						onChangeText={onChangeLength}
 						keyboardType='number-pad'
@@ -293,7 +294,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 					/>
 					<TextInputComponent
 						showFieldLabel={true}
-						fieldLabelText={transRef.t('width')}
+						fieldLabelText={en.width}
 						value={partyDetails.width?.toString()}
 						onChangeText={onChangeWidth}
 						keyboardType='number-pad'
@@ -304,7 +305,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 					/>
 					<TextInputComponent
 						showFieldLabel={true}
-						fieldLabelText={transRef.t('height')}
+						fieldLabelText={en.height}
 						value={partyDetails.height?.toString()}
 						onChangeText={onChangeHeight}
 						keyboardType='number-pad'
@@ -316,7 +317,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				<View style={styles.workAreaDetails}>
 					<TextInputComponent
 						showFieldLabel={true}
-						fieldLabelText={transRef.t('totalArea')}
+						fieldLabelText={en.totalArea}
 						value={partyDetails.totalArea ?partyDetails.totalArea?.toString() :''}
 						// onChangeText={onChangeHeight}
 						keyboardType='number-pad'
@@ -328,7 +329,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
                    />
                    <TextInputComponent
 						showFieldLabel={true}
-						fieldLabelText={transRef.t('totalAmount')}
+						fieldLabelText={en.totalAmount}
 						value={partyDetails.amount ?partyDetails.amount?.toString() :''}
 						// onChangeText={onChangeHeight}
 						keyboardType='number-pad'
@@ -341,7 +342,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				</View>
 				<TextInputComponent
 					showFieldLabel={true}
-					fieldLabelText={transRef.t('discount')}
+					fieldLabelText={en.discount}
 					value={partyDetails.discount?.toString()}
 					onChangeText={onChangeDiscount}
 					keyboardType='number-pad'
@@ -350,7 +351,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 				/>
 			</ScrollView>
 			<ButtonComponent
-				title={transRef.t(params ?'update' :'save')}
+				title={params ?en.update :en.save}
 				onPressIn={params ?onPressUpdate :onPressSave}
 				disabled={disableSave()}
 				mainContainer={styles.buttonContainer}
