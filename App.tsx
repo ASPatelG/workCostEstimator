@@ -28,8 +28,8 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
-// import {Provider} from 'react-redux';
-// import {dataStore} from './learnRedux/dataStore';
+import {Provider} from 'react-redux';
+import store from './reduxToolkit/store';
 
 import {LoginScreen} from './screens/loginScreen';
 import {OTPVerifyScreen} from './screens/OTPVerifyScreen';
@@ -42,10 +42,10 @@ type SectionProps = PropsWithChildren<{
 
 const ApploadingStack = createNativeStackNavigator();   // App Starting navigation(app root navigation)
 function AppMainStack (){
-  // dataStore --> To use centralized state,  Provider --> To map all screen with store
+  // store --> To use centralized state,  Provider --> To map all screen with store
   return (
 	<NavigationContainer>
-	  {/*<Provider store={dataStore}>*/}
+	  <Provider store={store}>
 		<ApploadingStack.Navigator
 		  initialRouteName='LoginScreen'  // To programing practise set ChooseWork
 		>
@@ -53,7 +53,7 @@ function AppMainStack (){
 		  <ApploadingStack.Screen name="OTPVerifyScreen" component={OTPVerifyScreen} options={{headerShown:false}}/>
 		  <ApploadingStack.Screen name="CostEstimationCalculator" component={CostEstimationCalculator} options={{headerShown:false}}/>
 		</ApploadingStack.Navigator>
-	  {/*</Provider>*/}
+	  </Provider>
 	</NavigationContainer>
   )
 }

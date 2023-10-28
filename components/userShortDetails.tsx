@@ -22,7 +22,6 @@ export const UserShortDetails = (props)=>{
 			if(!loginUserData || loginUserData){
 				let localLoginUserData = await getAnObjectFromAsyncStorage('businessUserData');
 				localLoginUserData = JSON.parse(localLoginUserData);
-				console.log('loginUserData: ', localLoginUserData);
 				setLoginUserData(localLoginUserData);
 				// dispatchrefrence(changeLoginUserData({
 				// 	loginUserData:{
