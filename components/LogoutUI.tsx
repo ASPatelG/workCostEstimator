@@ -2,21 +2,22 @@ import {TouchableOpacity, StyleSheet} from 'react-native';
 import {memo} from 'react';
 
 // import { AntDesign } from '@expo/vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
 
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
-// import {removeAnObjectFromAsyncStorage} from '../javaScriptFunction/asynStorageFunctionality';
+import {removeAnObjectFromAsyncStorage} from '../javaScriptFunction/asyncStorageFunctionality';
 
 const LogoutUI = (props)=>{
 	/* Used to show ui till the app is loading */
 
-	const onPressLogout = ()=>{
+	const onPressLogout = async ()=>{
 		/*
 			StackActions.reset--> can't use because, import { StackActions } from 'react-navigation'; react-navigation not support in expo
 		*/
 
 		const {navigation} = props;
-		// removeAnObjectFromAsyncStorage("businessUserData");
+		await removeAnObjectFromAsyncStorage("businessUserData");
 		navigation.popToTop();
 	}
 
@@ -25,12 +26,12 @@ const LogoutUI = (props)=>{
 			style={styles.logoutIconContainer}
 			onPress={onPressLogout}
 		>
-{/*			<AntDesign
+			<AntDesign
 				name="logout"
 				size={33}
 				color="#FCA203"
 				style={styles.iconStyle}
-			/>*/}
+			/>
 		</TouchableOpacity>
 	);
 }

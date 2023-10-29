@@ -64,12 +64,12 @@ export const LoginScreen = (props)=>{
 		const {mobileNumber, showOTPUI} = state;
 		const {navigation} = props;
 		if(constantValues.registeredMobileNumber === mobileNumber || showOTPUI){
-			dispatchrefrence(changeLoginUserData({
-				loginUserData:{
-					mobileNumber:constantValues.registeredMobileNumber,
-					userName:constantValues.registeredUserName
-				}
-			}));
+			// dispatchrefrence(changeLoginUserData({
+			// 	loginUserData:{
+			// 		mobileNumber:constantValues.registeredMobileNumber,
+			// 		userName:constantValues.registeredUserName
+			// 	}
+			// }));
 			if(showOTPUI){
 				const {countryCode} = state;
 				let generatedOTP = generateOTP();
@@ -122,11 +122,11 @@ export const LoginScreen = (props)=>{
 				<ButtonComponent
 					title={state.showOTPUI ?en.getOTP :en.submit}
 					onPressIn={onPressSubmit}
-					disabled={mobileNumber.length < 10}
+					disabled={state?.mobileNumber?.length < 10}
 					mainContainer={styles.buttonContainer}
 				/>
 				{
-					showOTPUI
+					state?.showOTPUI
 					? <Text style={styles.signupHintStyle}>{en.signupHint}</Text>
 					: null
 				}

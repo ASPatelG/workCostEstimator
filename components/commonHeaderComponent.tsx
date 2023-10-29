@@ -11,6 +11,7 @@ export const CommonHeaderComponent = (props)=> {
 			<StatusBar
 				animated={true}
 				backgroundColor="#61dafb"
+				hidden={Platform.OS === 'ios'}
 	    	/>
 		</View>
 	)
