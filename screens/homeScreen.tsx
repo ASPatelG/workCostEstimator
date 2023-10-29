@@ -46,7 +46,6 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		workType:constantValues.workTypes[0].value,
 		isLoading:true,
 	});
-	// const allPartiesWorkArray  = useSelector((state)=>state.quotations.quotations);
 	// const dispatchRefrence = useDispatch()		// To send the data in store
 	const RBSheetRef = useRef(null);
 
@@ -64,7 +63,6 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 
 		const setPartyDataInStore = async() => {
 			let tablePartyData = await getPartyData();
-			console.log('tablePartyData: ', tablePartyData);
 			if(state?.allPartiesWorkArray.length === 0){
 				setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{mobileNumber:'', isApplied:false, workType:''}, isLoading:false}));
 			}
@@ -84,7 +82,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 			setPartyDataInStore();	// To store table data in readux-store
 		});
 
-		// To remove event on onmount
+		// To remove event on unmount
 		return () => {
 			backHandler.remove();
 			willFocusSubscription();
@@ -97,9 +95,11 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		navigation.navigate('AddUpdatePartyWorkDetails');
 	}
 
-	const onPressPDF = (nativeEvent)=>{
+	const onPressPDF = async (nativeEvent)=>{
 		if(state?.allPartiesWorkArray.length > 0){
-			generateWorkPaymentPDF(state?.allPartiesWorkArray);
+			setState(previous=>({...previous, isLoading:true}));
+			await generateWorkPaymentPDF(state?.allPartiesWorkArray);
+			setState(previous=>({...previous, isLoading:false}));
 		}
 		else{
 			showErrorAlert(en.noWorkError);
