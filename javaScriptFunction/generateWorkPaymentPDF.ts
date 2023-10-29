@@ -81,13 +81,13 @@ export const generateWorkPaymentPDF = async (dataToAddInPDF) => {
 
 	const options = {
 	    html: htmlContent,
-	    fileName: 'myPDF',
+	    fileName: 'workDetailsPDF',
 	    directory: 'Documents',
 	};
 
 	try {
-		const pdf = await RNHTMLtoPDF.convert(options);
-		await RNPrint.print({ filePath: pdf.filePath })
+		const pdf = await RNHTMLtoPDF.convert(options);		// To created pdf file
+		await RNPrint.print({ filePath: pdf.filePath })		// To print/show pdf flile in screen
 	}
 	catch (error) {
 		console.error('Error generating PDF:', error);
