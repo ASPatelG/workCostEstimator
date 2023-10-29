@@ -37,12 +37,13 @@ const PartyShortDetails = (props)=>{
 			<View style={styles.rightColumnStyle}>
 				<Pressable
 					onPressIn={(nativeEvent)=>onUpdate(partySomeDetails, index)}
-					style={styles.rightIconStyle}
+					style={styles.rightContentStyle}
 				>
 					<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>
 					<AntDesign name="edit" size={22} color="#808080" />
 				</Pressable>
 				<Pressable
+					style={styles.deleteIconStyle}
 					onPressIn={(nativeEvent)=>onDelete(partySomeDetails, index)}
 				>
 					<MaterialIcons name="delete-outline" size={30} color="#ff0000" />
@@ -107,8 +108,11 @@ const styles = StyleSheet.create({
 		width:wp('13%'),
 		textAlign:'center',
 	},
-	rightIconStyle:{
+	rightContentStyle:{
 		flexDirection:'row',
+	},
+	deleteIconStyle:{
+		marginLeft:8,
 	},
 	rightColumnStyle:{
 		flexWrap:'wrap',
