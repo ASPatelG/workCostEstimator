@@ -20,8 +20,8 @@ import PartyWorkFilter from '../components/PartyWorkFilter';
 import CommonGuiToApplyFilter from '../components/CommonGuiToApplyFilter';
 import ScreenUILoading from '../components/ScreenUILoading';
 
-// import { createOwnerTable, createPartyTable } from '../sqliteDatabaseFunctionality/createTable';
-// import { getPartyData, filterPartyData } from '../sqliteDatabaseFunctionality/getData';
+import { createOwnerTable, createPartyTable } from '../sqliteDatabaseFunctionality/createTable';
+import { getPartyData, filterPartyData } from '../sqliteDatabaseFunctionality/getData';
 import {constantValues} from '../staticDataFiles/constantValues';
 
 import {styles} from './screens.styles/homeScreenStyles';
@@ -34,8 +34,9 @@ const { en } = translationValues;
 
 const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	/* Used to show ui till the app is loading */
+	const reduxAllPartiesWorkArray  = useSelector((state)=>state.quotations.quotations);
 	const [state, setState] = useState({
-		// allPartiesWorkArray:[],
+		allPartiesWorkArray:[...reduxAllPartiesWorkArray],
 		appliedFilter:{
 			isApplied:false,
 			mobileNumber:'',
@@ -45,7 +46,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		workType:constantValues.workTypes[0].value,
 		isLoading:true,
 	});
-	const allPartiesWorkArray  = useSelector((state)=>state.quotations.quotations);
+	// const allPartiesWorkArray  = useSelector((state)=>state.quotations.quotations);
 	// const dispatchRefrence = useDispatch()		// To send the data in store
 	const RBSheetRef = useRef(null);
 
@@ -62,8 +63,14 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		};
 
 		const setPartyDataInStore = async() => {
-			// setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{mobileNumber:'', isApplied:false, workType:''}, isLoading:false}));
-			setState((previous)=>({...previous, appliedFilter:{mobileNumber:'', isApplied:false, workType:''}, isLoading:false}));
+			let tablePartyData = await getPartyData();
+			console.log('tablePartyData: ', tablePartyData);
+			if(state?.allPartiesWorkArray.length === 0){
+				setState((previous)=>({...previous, allPartiesWorkArray:[...tablePartyData], appliedFilter:{mobileNumber:'', isApplied:false, workType:''}, isLoading:false}));
+			}
+			else{
+				setState((previous)=>({...previous, appliedFilter:{mobileNumber:'', isApplied:false, workType:''}, isLoading:false}));
+			}
 		};
 
 		const backHandler = BackHandler.addEventListener(
@@ -72,8 +79,8 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		);
 
 		const willFocusSubscription = navigation.addListener('focus', ()=> {
-			// createOwnerTable();		// To store business owner details
-			// createPartyTable();		// To store party's works details
+			createOwnerTable();		// To store business owner details
+			createPartyTable();		// To store party's works details
 			setPartyDataInStore();	// To store table data in readux-store
 		});
 
@@ -91,8 +98,8 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	const onPressPDF = (nativeEvent)=>{
-		if(allPartiesWorkArray.length > 0){
-			generateWorkPaymentPDF(allPartiesWorkArray);
+		if(state?.allPartiesWorkArray.length > 0){
+			generateWorkPaymentPDF(state?.allPartiesWorkArray);
 		}
 		else{
 			showErrorAlert(en.noWorkError);
@@ -118,7 +125,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 	}
 
 	const onOpenFilterUI = (nativeEvent)=>{
-		if(allPartiesWorkArray.length === 0 && !state.appliedFilter.isApplied){
+		if(state?.allPartiesWorkArray.length === 0 && !state.appliedFilter.isApplied){
 			showErrorAlert(en.noWorkError);
 		}
 		else{
@@ -179,10 +186,10 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 						/>
 						: null
 					}
-					{allPartiesWorkArray.length
+					{state?.allPartiesWorkArray.length
 						? <View style={styles.flatlistContainer}>
 						<FlatList 
-							data={allPartiesWorkArray} 
+							data={state?.allPartiesWorkArray} 
 							renderItem={({item, index})=> <PartyShortDetails
 								key={index}
 								index={index}
@@ -195,7 +202,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 						/></View>
 						: null
 					}
-					{state?.appliedFilter?.isApplied && !allPartiesWorkArray?.length
+					{state?.appliedFilter?.isApplied && !state?.allPartiesWorkArray?.length
 						? <Text style={styles.noFilterPartyData}>{en.notFoundPartyData}</Text>
 						: null
 					}
