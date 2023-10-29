@@ -7,8 +7,8 @@ import {CommonHeaderComponent} from '../components/commonHeaderComponent';
 import TextInputComponent from '../components/textInputComponent';
 import ButtonComponent from '../components/buttonComponent';
 // import {addPartyDetails, updatePartyDetails} from '../learnRedux/actions';
-// import { insertPartyDetail } from '../sqliteDatabaseFunctionality/insertData';
-// import { updatePartyDetail } from '../sqliteDatabaseFunctionality/updateData';
+import { insertPartyDetail } from '../sqliteDatabaseFunctionality/insertData';
+import { updatePartyDetail } from '../sqliteDatabaseFunctionality/updateData';
 import {translationValues} from '../staticDataFiles/translationValues';
 const { en } = translationValues;
 
@@ -203,7 +203,7 @@ const AddUpdatePartyWorkDetails = (props)=>{
 
 	const onPressSave = async ()=>{
 		const {navigation} = props;
-		// const insertDataOutput = await insertPartyDetail(partyDetails);
+		const insertDataOutput = await insertPartyDetail(partyDetails);
 		const bodyData = {
 			first_name:partyDetails.firstName,
 			last_name:partyDetails.lastName,
@@ -218,14 +218,13 @@ const AddUpdatePartyWorkDetails = (props)=>{
 			amount:partyDetails.amount,
 			discount:partyDetails.discount
 		};
-		// dispatchRefrence(addQuotation({partyData:bodyData}));
 		dispatchRefrence(addQuotation(bodyData));
 		navigation.goBack();
 	}
 
 	const onPressUpdate = async ()=>{
 		const {navigation} = props;
-		// const updateDataResult = await updatePartyDetail(partyDetails);
+		const updateDataResult = await updatePartyDetail(partyDetails);
 		const bodyData = {first_name:partyDetails.firstName, last_name:partyDetails.lastName, mobile_number:partyDetails.mobileNumber, email:partyDetails.email, work_type:partyDetails.workType, length:partyDetails.length, width:partyDetails.width, height:partyDetails.height, rate:partyDetails.rate, total_area:partyDetails.totalArea, amount:partyDetails.amount, discount:partyDetails.discount};
 		dispatchRefrence(updateQuotation({partyData:bodyData, activeIndex:params.activeIndex}));
 		navigation.goBack();
