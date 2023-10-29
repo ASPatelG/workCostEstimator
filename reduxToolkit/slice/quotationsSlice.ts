@@ -1,16 +1,16 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface Quotation {
-	firstName:string;
-	lastName:string;
-	mobileNumber:number;
+	first_name:string;
+	last_name:string;
+	mobile_number:number;
 	email:string;
-	workType:string;
-	rate:number;
+	work_type:string;
 	length:number;
 	width:number;
 	height:number;
-	totalArea:number;
+	rate:number;
+	total_area:number;
 	amount:number;
 	discount:number;
 }

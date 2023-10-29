@@ -10,7 +10,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 import LogoutUI from './LogoutUI';
 
-// import { FontAwesome } from '@expo/vector-icons';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export const UserShortDetails = (props)=>{
 	// let loginUserData  = useSelector((state)=>state.loginUserData);
@@ -21,8 +21,10 @@ export const UserShortDetails = (props)=>{
 		const getBusinessUserData = async ()=>{
 			if(!loginUserData || loginUserData){
 				let localLoginUserData = await getAnObjectFromAsyncStorage('businessUserData');
-				localLoginUserData = JSON.parse(localLoginUserData);
-				setLoginUserData(localLoginUserData);
+				if(localLoginUserData){
+					localLoginUserData = JSON.parse(localLoginUserData);
+					setLoginUserData(localLoginUserData);
+				}
 				// dispatchrefrence(changeLoginUserData({
 				// 	loginUserData:{
 				// 		mobileNumber:constantValues.registeredMobileNumber,
@@ -36,12 +38,11 @@ export const UserShortDetails = (props)=>{
 
 	return(
 		<View style={styles.userDetailsContainer}>
-			{/*<FontAwesome name="user-circle" size={50} color="#B3B3B3" />*/}
+			<FontAwesome name="user-circle" size={50} color="#B3B3B3" />
 			<View style={styles.userDetails}>
 				<Text style={styles.userNameStyle}>{loginUserData.userName}</Text>
 				<Text>{loginUserData.mobileNumber}</Text>
 			</View>
-			{/*<LogoutUI navigation={props.navigation}/>*/}
 		</View>
 	);
 }

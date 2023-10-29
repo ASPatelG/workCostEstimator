@@ -1,7 +1,8 @@
 import {memo} from 'react';
 import {View, Text, StyleSheet, Pressable} from 'react-native';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-// import { AntDesign } from '@expo/vector-icons';
+import AntDesign from 'react-native-vector-icons/AntDesign';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import {useDispatch} from 'react-redux';
 import { deleteQuotation } from '../reduxToolkit/slice/quotationsSlice';
 
@@ -33,27 +34,18 @@ const PartyShortDetails = (props)=>{
 			<View style={styles.columnStyle}>
 				<Text style={styles.columnValueStyle}>{partySomeDetails.amount}</Text>
 			</View>
-			<View>
-				<Pressable
-					// onPressIn={(nativeEvent)=>onPress(partySomeDetails, index)}
-					style={styles.columnStyle}
-				>
-					<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>
-					{/*<AntDesign name="edit" size={22} color="#808080" />*/}
-				</Pressable>
+			<View style={styles.rightColumnStyle}>
 				<Pressable
 					onPressIn={(nativeEvent)=>onUpdate(partySomeDetails, index)}
-					style={styles.columnStyle}
+					style={styles.rightIconStyle}
 				>
-					<Text style={styles.updateTextStyle}>{'Update'}</Text>
-					{/*<AntDesign name="edit" size={22} color="#808080" />*/}
+					<Text style={styles.rightColumnValueStyle}>{partySomeDetails.work_type}</Text>
+					<AntDesign name="edit" size={22} color="#808080" />
 				</Pressable>
 				<Pressable
 					onPressIn={(nativeEvent)=>onDelete(partySomeDetails, index)}
-					style={styles.columnStyle}
 				>
-					<Text style={styles.deleteTextStyle}>{'Delete'}</Text>
-					{/*<AntDesign name="edit" size={22} color="#808080" />*/}
+					<MaterialIcons name="delete-outline" size={30} color="#ff0000" />
 				</Pressable>
 			</View>
 		</View>
@@ -108,18 +100,24 @@ const styles = StyleSheet.create({
 		width:wp('13%'),
 		textAlign:'center',
 	},
-	updateTextStyle:{
-		fontSize:15,
-		fontWeight:'bold',
-		color:'#6666ff',
-		width:wp('13%'),
-		textAlign:'center',
-	},
 	deleteTextStyle:{
 		fontSize:15,
 		fontWeight:'bold',
 		color:'#ff0000',
 		width:wp('13%'),
 		textAlign:'center',
-	}
+	},
+	rightIconStyle:{
+		flexDirection:'row',
+	},
+	rightColumnStyle:{
+		flexWrap:'wrap',
+		paddingVertical:15,
+		paddingHorizontal:3,
+		width:wp('25.07%'),
+		borderLeftWidth:1,
+		borderLeftColor:'#B3B3B3',
+		flexDirection:'row',
+		alignItems:'center',
+	},
 });

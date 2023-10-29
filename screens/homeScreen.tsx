@@ -2,7 +2,8 @@ import {useState, useEffect, useRef} from 'react';
 import {View, BackHandler, FlatList, Pressable, Text} from 'react-native';
 import {useSelector, useDispatch} from 'react-redux';
 
-// import { FontAwesome5, FontAwesome } from '@expo/vector-icons';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 // import {dataStore} from '../learnRedux/dataStore';
 // import {addPartyDetails, setPartyTableDataInStore} from '../learnRedux/actions';
@@ -156,19 +157,19 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 		return(
 			<View style={styles.mainContainer}>
 				<CommonHeaderComponent/>
-				<View style={{flexDirection:'row', alignItems:'center'}}>
+				<View style={styles.iconContainer}>
 					<UserShortDetails navigation={props.navigation}/>
 					<Pressable
 						// onPressIn={onPressPDF}
 						style={styles.downloadIconContainer}
 					>
-						{/*<FontAwesome5 name="file-download" size={33} color="#F5EC42"/>*/}
+						<FontAwesome5 name="file-download" size={33} color="#F5EC42"/>
 					</Pressable>
 					<Pressable
-						onPressIn={onOpenFilterUI}
+						// onPressIn={onOpenFilterUI}
 						style={styles.downloadIconContainer}
 					>
-						{/*<FontAwesome name="filter" size={35} color="#38C6F4" />*/}
+						<FontAwesome name="filter" size={35} color="#38C6F4" />
 					</Pressable>
 					<LogoutUI navigation={props.navigation}/>
 				</View>
