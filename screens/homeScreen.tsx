@@ -26,7 +26,7 @@ import {constantValues} from '../staticDataFiles/constantValues';
 
 import {styles} from './screens.styles/homeScreenStyles';
 
-// import {generateWorkPaymentPDF} from '../javaScriptFunction/generateWorkPaymentPDF';
+import {generateWorkPaymentPDF} from '../javaScriptFunction/generateWorkPaymentPDF';
 
 import {translationValues} from '../staticDataFiles/translationValues';
 const { en } = translationValues;
@@ -160,7 +160,7 @@ const HomeScreen = (props)=>{ 	// props used to get user props and default props
 				<View style={styles.iconContainer}>
 					<UserShortDetails navigation={props.navigation}/>
 					<Pressable
-						// onPressIn={onPressPDF}
+						onPressIn={onPressPDF}
 						style={styles.downloadIconContainer}
 					>
 						<FontAwesome5 name="file-download" size={33} color="#F5EC42"/>
